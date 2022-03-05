@@ -44,6 +44,10 @@ class Name {
   final String first;
   final String last;
 
+  String get fullName {
+    return '$first $last'.toTitle();
+  }
+
   const Name({required this.title, required this.first, required this.last});
 
   factory Name.fromJson(Map<String, dynamic> json) {
@@ -63,6 +67,14 @@ class Location {
   final Coordinates coordinates;
   final TimeZone timezone;
 
+  String get streetName {
+    return street.split(' ').sublist(1).join(' ').toTitle();
+  }
+
+  String get addressNumber {
+    return street.split(' ')[0];
+  }
+
   const Location({
     required this.street,
     required this.city,
@@ -79,7 +91,7 @@ class Location {
       state: json['state'] as String,
       postcode: json['postcode'] as int,
       // coordinates: Coordinates.fromJson(json['coordinates']),
-      coordinates: Coordinates(latitude: 0.0, longitude: 0.0),
+      coordinates: const Coordinates(latitude: 0.0, longitude: 0.0),
       timezone: TimeZone.fromJson(json['timezone']),
     );
   }

@@ -9,17 +9,23 @@ class MemberList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AppProvider>(context).loadMembers();
-    final List<Member> memberList =
-        Provider.of<AppProvider>(context).memberList;
-    return Container(
-      height: 100.0,
-      width: 100.0,
-      child: GridView.count(
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        children: [for (final Member m in memberList) MemberCard(member: m)],
-      ),
+    return Consumer<AppProvider>(
+      builder: (context, provider, child) {
+        return Expanded(
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 0.0,
+              mainAxisSpacing: 0.0,
+            ),
+            itemCount: provider.memberList.length,
+            itemBuilder: (context, index) {
+              final Member member = provider.memberList[index];
+              return MemberCard(member: member);
+            },
+          ),
+        );
+      },
     );
   }
 }

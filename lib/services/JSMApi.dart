@@ -1,8 +1,11 @@
+// ignore_for_file: file_names
+
+import 'package:flutter/foundation.dart';
 import 'package:juntossomosmais_app/constants.dart';
 
 import '../models/member.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' show jsonDecode;
+import 'dart:convert' show jsonDecode, utf8;
 
 class JSMApi {
   Future<List<Member>> getAllUsers() async {
@@ -15,9 +18,13 @@ class JSMApi {
       throw Exception('$url -> http status ${response.statusCode}');
     }
 
-    List<dynamic> json = jsonDecode(response.body)['results'];
+    List<dynamic> json = jsonDecode(utf8.decode(response.bodyBytes))['results'];
 
+    return compute(parseMembers, json);
+  }
+
+  List<Member> parseMembers(List<dynamic> membersAsJson) {
     return List<Member>.generate(
-        json.length, (index) => Member.fromJson(json[index]));
+        membersAsJson.length, (index) => Member.fromJson(membersAsJson[index]));
   }
 }
