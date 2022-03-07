@@ -9,23 +9,32 @@ class AppProvider extends ChangeNotifier {
   final Set<String> _allMemberStates = {};
   final JSMApi _api = JSMApi();
 
+  AppProvider() {
+    loadMembers();
+  }
+
   String get nameFilter => _nameFilter;
   bool get hasFilteredStates => _filteredStates.isNotEmpty;
 
-  List<Member> get memberList {
-    late List<Member> _tempMemberList;
-    if (_filteredStates.isNotEmpty) {
-      _tempMemberList = _memberList
-          .where((element) => _filteredStates.contains(element.location.state))
-          .toList();
-    } else {
-      _tempMemberList = _memberList;
-    }
-    return _tempMemberList.where(
+  List<Member> get memberList =>
+      _applyNameFilter(_applyLocationFilter(_memberList));
+
+  List<Member> _applyNameFilter(List<Member> members) {
+    return members.where(
       (element) {
         return _nameFilter.isEmpty
             ? true
             : element.name.fullName.toLowerCase().startsWith(_nameFilter);
+      },
+    ).toList();
+  }
+
+  List<Member> _applyLocationFilter(List<Member> members) {
+    return members.where(
+      (element) {
+        return _filteredStates.isEmpty
+            ? true
+            : _filteredStates.contains(element.location.state);
       },
     ).toList();
   }
@@ -39,10 +48,6 @@ class AppProvider extends ChangeNotifier {
     final List<String> _ = _allMemberStates.toList();
     _.sort();
     return _;
-  }
-
-  AppProvider() {
-    loadMembers();
   }
 
   void forceReload() => notifyListeners();
