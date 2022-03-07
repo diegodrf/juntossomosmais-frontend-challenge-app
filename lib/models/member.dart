@@ -26,7 +26,6 @@ class Member {
     required this.picture,
   }) {
     customId = _idGenerator();
-    print(customId);
   }
 
   static int _idGenerator() => ++_idCounter;

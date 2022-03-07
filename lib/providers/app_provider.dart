@@ -4,17 +4,35 @@ import 'package:juntossomosmais_app/services/JSMApi.dart';
 
 class AppProvider extends ChangeNotifier {
   List<Member> _memberList = [];
+  String _nameFilter = '';
   final Set<String> _filteredStates = {};
   final Set<String> _allMemberStates = {};
   final JSMApi _api = JSMApi();
 
+  String get nameFilter => _nameFilter;
+  bool get hasFilteredStates => _filteredStates.isNotEmpty;
+
   List<Member> get memberList {
+    late List<Member> _tempMemberList;
     if (_filteredStates.isNotEmpty) {
-      return _memberList
+      _tempMemberList = _memberList
           .where((element) => _filteredStates.contains(element.location.state))
           .toList();
+    } else {
+      _tempMemberList = _memberList;
     }
-    return _memberList;
+    return _tempMemberList.where(
+      (element) {
+        return _nameFilter.isEmpty
+            ? true
+            : element.name.fullName.toLowerCase().startsWith(_nameFilter);
+      },
+    ).toList();
+  }
+
+  void filterByName(String name) {
+    _nameFilter = name;
+    notifyListeners();
   }
 
   List<String> get allMemberStates {

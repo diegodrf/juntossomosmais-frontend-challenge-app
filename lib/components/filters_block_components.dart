@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:juntossomosmais_app/components/filter_by_states_component.dart';
 import 'package:juntossomosmais_app/components/filter_component.dart';
 import 'package:juntossomosmais_app/components/order_by_component.dart';
+import 'package:juntossomosmais_app/providers/app_provider.dart';
+import 'package:provider/provider.dart';
 
 class FiltersBlock extends StatelessWidget {
   const FiltersBlock({Key? key}) : super(key: key);
@@ -14,7 +16,9 @@ class FiltersBlock extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Filter(
-            icon: Icons.filter_alt_outlined,
+            icon: Provider.of<AppProvider>(context).hasFilteredStates
+                ? Icons.filter_alt
+                : Icons.filter_alt_outlined,
             text: 'Filter By',
             onTap: () {
               showModalBottomSheet(
