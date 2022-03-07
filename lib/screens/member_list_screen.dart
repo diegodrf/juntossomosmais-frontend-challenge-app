@@ -15,12 +15,15 @@ class MemberListScreen extends StatelessWidget {
           title: const Text('Member List'),
           centerTitle: true,
         ),
-        body: Column(
-          children: const [
-            FiltersBlock(),
-            Divider(),
-            MemberList(),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            children: const [
+              FiltersBlock(),
+              Divider(),
+              MemberList(),
+            ],
+          ),
         ),
       ),
     );

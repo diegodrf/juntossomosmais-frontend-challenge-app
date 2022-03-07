@@ -90,8 +90,7 @@ class Location {
       city: json['city'] as String,
       state: json['state'] as String,
       postcode: json['postcode'] as int,
-      // coordinates: Coordinates.fromJson(json['coordinates']),
-      coordinates: const Coordinates(latitude: 0.0, longitude: 0.0),
+      coordinates: Coordinates.fromJson(json['coordinates']),
       timezone: TimeZone.fromJson(json['timezone']),
     );
   }
@@ -111,9 +110,14 @@ class Coordinates {
 
   factory Coordinates.fromJson(Map<String, dynamic> json) {
     return Coordinates(
-      latitude: json['latitude'],
-      longitude: json['longitude'],
+      latitude: double.parse(json['latitude']),
+      longitude: double.parse(json['longitude']),
     );
+  }
+
+  @override
+  String toString() {
+    return 'Coordinates{latitude: $latitude, longitude: $longitude}';
   }
 }
 

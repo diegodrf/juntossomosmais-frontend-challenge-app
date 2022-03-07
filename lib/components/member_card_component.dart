@@ -21,9 +21,10 @@ class MemberCard extends StatelessWidget {
           elevation: 8.0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CachedNetworkImage(
-                imageUrl: member.picture.thumbnail,
+                imageUrl: member.picture.medium,
                 imageBuilder: (context, imageProvider) => CircleAvatar(
                   radius: kCircleAvatarImageRadius,
                   backgroundImage: imageProvider,
@@ -40,10 +41,12 @@ class MemberCard extends StatelessWidget {
               Text(
                 member.name.fullName,
                 style: kMemberNameTextStyle,
+                textAlign: TextAlign.center,
               ),
               Text(
                 '${member.location.streetName}, ${member.location.addressNumber}',
                 style: kMemberAddressTextStyle,
+                textAlign: TextAlign.center,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -52,10 +55,12 @@ class MemberCard extends StatelessWidget {
                   Text(
                     member.location.state.toTitle(),
                     style: kMemberCityTextStyle,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     '${member.location.city.toTitle()} CEP: ${member.location.postcode}',
                     style: kMemberCityTextStyle,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
