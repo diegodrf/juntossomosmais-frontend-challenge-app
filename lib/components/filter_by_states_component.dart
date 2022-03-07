@@ -47,7 +47,7 @@ class _FilterByStatesComponentState extends State<FilterByStatesComponent> {
                 provider.forceReload();
                 Navigator.pop(context);
               },
-              child: Text('Apply'),
+              child: const Text('Apply'),
             ),
           ],
         );

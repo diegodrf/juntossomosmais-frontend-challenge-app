@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:juntossomosmais_app/constants.dart';
 import 'package:juntossomosmais_app/extensions/extensions.dart';
 import 'package:juntossomosmais_app/models/member.dart';
+import 'package:juntossomosmais_app/screens/member_details.dart';
 
 class MemberCard extends StatelessWidget {
   final Member member;
@@ -13,29 +14,42 @@ class MemberCard extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return InkWell(
-      onTap: () => print('${member.name.first} tapped!'),
+      onTap: () => Navigator.pushNamed(
+        context,
+        MemberDetailsScreen.route,
+        arguments: member,
+      ),
       child: SizedBox(
         height: size.height * 0.8,
         width: size.width * 0.5,
         child: Card(
-          elevation: 8.0,
+          elevation: kCardElevationDefault,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CachedNetworkImage(
-                imageUrl: member.picture.medium,
-                imageBuilder: (context, imageProvider) => CircleAvatar(
-                  radius: kCircleAvatarImageRadius,
-                  backgroundImage: imageProvider,
-                ),
-                placeholder: (context, text) => const CircleAvatar(
-                  radius: kCircleAvatarImageRadius,
-                  child: Icon(Icons.person),
-                ),
-                errorWidget: (context, text, _) => const CircleAvatar(
-                  radius: kCircleAvatarImageRadius,
-                  child: Icon(Icons.error),
+              Hero(
+                tag: member.customId.toString(),
+                child: CachedNetworkImage(
+                  imageUrl: member.picture.medium,
+                  imageBuilder: (context, imageProvider) => CircleAvatar(
+                    radius: kCircleAvatarImageRadiusMedium,
+                    backgroundImage: imageProvider,
+                  ),
+                  placeholder: (context, text) => const CircleAvatar(
+                    radius: kCircleAvatarImageRadiusMedium,
+                    child: Icon(
+                      Icons.person,
+                      size: kCircleAvatarImageRadiusMedium,
+                    ),
+                  ),
+                  errorWidget: (context, text, _) => const CircleAvatar(
+                    radius: kCircleAvatarImageRadiusMedium,
+                    child: Icon(
+                      Icons.error,
+                      size: kCircleAvatarImageRadiusMedium,
+                    ),
+                  ),
                 ),
               ),
               Text(

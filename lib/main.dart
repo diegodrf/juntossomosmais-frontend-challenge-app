@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:juntossomosmais_app/providers/app_provider.dart';
+import 'package:juntossomosmais_app/screens/member_details.dart';
 import 'package:juntossomosmais_app/screens/member_list_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,8 @@ class JuntosSomosMaisApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: MemberListScreen.router,
         routes: {
-          MemberListScreen.router: (context) => const MemberListScreen()
+          MemberListScreen.router: (context) => const MemberListScreen(),
+          MemberDetailsScreen.route: (context) => const MemberDetailsScreen(),
         },
       ),
     );

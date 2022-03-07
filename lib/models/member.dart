@@ -1,6 +1,8 @@
 import 'package:juntossomosmais_app/extensions/extensions.dart';
 
 class Member {
+  static int _idCounter = 0;
+  late final int customId;
   final String gender;
   final Name name;
   final Location location;
@@ -12,7 +14,7 @@ class Member {
   final String cell;
   final Picture picture;
 
-  const Member({
+  Member({
     required this.gender,
     required this.name,
     required this.location,
@@ -22,7 +24,12 @@ class Member {
     required this.phone,
     required this.cell,
     required this.picture,
-  });
+  }) {
+    customId = _idGenerator();
+    print(customId);
+  }
+
+  static int _idGenerator() => ++_idCounter;
 
   factory Member.fromJson(Map<String, dynamic> json) {
     return Member(
